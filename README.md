@@ -18,7 +18,6 @@ uv run prisma generate -> generate prisma client
 
 uv run prisma db push -> push schema to neon
 
-
 Terminal 1: run npx @modelcontextprotocol/inspector -> you can able to see the tools in the inspector
 
-Terminal 2: uv run uvicorn app.main:app --reload -> you can able to see the routes in the docs
+Terminal 2: uv run uvicorn app.main:app --reload --reload-dir app --reload-exclude .venv  -> you can able to see the routes in the docs

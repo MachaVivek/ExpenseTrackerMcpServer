@@ -35,27 +35,9 @@ model User {
 
   transactions  Transaction[]
   budgets       Budget[]
-  categories    Category[]
 
   @@index([email])
   @@index([username])
-}
-
-model Category {
-  id            Int           @id @default(autoincrement())
-
-  name          String
-  color         String?
-
-  createdAt     DateTime      @default(now())
-
-  userId        Int
-  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  transactions  Transaction[]
-  budgets       Budget[]
-
-  @@index([userId])
 }
 
 model Transaction {
@@ -67,6 +49,7 @@ model Transaction {
   amount          Float
 
   type            TransactionType
+  category        String
 
   transactionDate DateTime          @default(now())
 
@@ -76,21 +59,22 @@ model Transaction {
   userId          Int
   user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  categoryId      Int?
-  category        Category?         @relation(fields: [categoryId], references: [id])
-
   @@index([userId])
-  @@index([categoryId])
   @@index([transactionDate])
   @@index([type])
+  @@index([category])
 }
 
 model Budget {
   id              Int              @id @default(autoincrement())
+
   name            String
   amount          Float
   spentAmount     Float            @default(0)
+
   period          BudgetPeriod
+
+  category        String
 
   startDate       DateTime
   endDate         DateTime
@@ -101,10 +85,7 @@ model Budget {
   userId          Int
   user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  categoryId      Int?
-  category        Category?        @relation(fields: [categoryId], references: [id])
-
   @@index([userId])
-  @@index([categoryId])
+  @@index([category])
 }
 

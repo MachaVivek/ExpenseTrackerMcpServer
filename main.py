@@ -3,7 +3,6 @@ from contextlib import asynccontextmanager
 from fastapi import Depends
 
 
-from app.database.prisma import db
 from app.auth.routes import router as auth_router
 from app.reports.routes import router as reports_router
 
@@ -16,6 +15,7 @@ mcp_app = mcp.http_app(path="/")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    from app.database.prisma import db
     await db.connect()
     print("Database connected")
     async with mcp_app.lifespan(app):

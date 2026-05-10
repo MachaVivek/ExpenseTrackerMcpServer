@@ -35,6 +35,7 @@ def divide(a: float, b: float):
         "result": a / b
     }
 
+
 @mcp.tool()
 def power(base: float, exponent: float):
     return {

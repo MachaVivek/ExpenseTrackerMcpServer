@@ -6,4 +6,4 @@ mcp = FastMCP(
 )
 
 # Import tools AFTER creating mcp
-from mcp.tools import expense_tools
+from tools import expense_tools

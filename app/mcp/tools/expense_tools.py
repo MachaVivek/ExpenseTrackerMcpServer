@@ -1,9 +1,9 @@
 from fastmcp import Context
 
-from server import mcp
-from database.prisma import db
+from app.mcp.server import mcp
+from app.database.prisma import db
 
-from currentUser import (
+from app.mcp.currentUser import (
     get_current_mcp_user
 )
 

@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from jose import jwt, JWTError
 from fastapi import HTTPException
 
-from database.prisma import db
+from app.database.prisma import db
 
 load_dotenv()
 # JWT configuration

@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from fastmcp import Context
 
-from auth import get_user_from_token
+from app.mcp.auth import get_user_from_token
 
 # Authenticate current MCP user using Authorization metadata.
 async def get_current_mcp_user(

@@ -2,15 +2,15 @@ from fastapi import APIRouter, HTTPException
 from prisma.errors import UniqueViolationError
 
 # prisma client instance
-from database.prisma import db
+from app.database.prisma import db
 
 # validation schemas
-from auth.schemas import (
+from app.auth.schemas import (
     RegisterSchema,
     LoginSchema
 )
 
-from utils.security import (
+from app.utils.security import (
     hash_password,
     verify_password,
     create_access_token

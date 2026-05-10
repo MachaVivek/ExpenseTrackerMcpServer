@@ -7,8 +7,8 @@ from io import StringIO
 
 import pandas as pd
 
-from app.database.prisma import db
-from app.auth.dependencies import get_current_user
+from database.prisma import db
+from auth.dependencies import get_current_user
 
 
 router = APIRouter(

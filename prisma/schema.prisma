@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-py"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum BudgetPeriod {
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+
+  username      String        @unique
+  email         String        @unique
+  password      String
+
+  fullName      String?
+  profileImage  String?
+
+  isActive      Boolean       @default(true)
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  transactions  Transaction[]
+  budgets       Budget[]
+  categories    Category[]
+
+  @@index([email])
+  @@index([username])
+}
+
+model Category {
+  id            Int           @id @default(autoincrement())
+
+  name          String
+  color         String?
+
+  createdAt     DateTime      @default(now())
+
+  userId        Int
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transactions  Transaction[]
+  budgets       Budget[]
+
+  @@index([userId])
+}
+
+model Transaction {
+  id              Int               @id @default(autoincrement())
+
+  title           String
+  description     String?
+
+  amount          Float
+
+  type            TransactionType
+
+  transactionDate DateTime          @default(now())
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  userId          Int
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  categoryId      Int?
+  category        Category?         @relation(fields: [categoryId], references: [id])
+
+  @@index([userId])
+  @@index([categoryId])
+  @@index([transactionDate])
+  @@index([type])
+}
+
+model Budget {
+  id              Int              @id @default(autoincrement())
+  name            String
+  amount          Float
+  spentAmount     Float            @default(0)
+  period          BudgetPeriod
+
+  startDate       DateTime
+  endDate         DateTime
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  userId          Int
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  categoryId      Int?
+  category        Category?        @relation(fields: [categoryId], references: [id])
+
+  @@index([userId])
+  @@index([categoryId])
+}
+

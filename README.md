@@ -1,15 +1,24 @@
 uv init .
 
-uv add fastmcp
+setup folder structure
 
-To run the server
+create requirements.txt file and write all are the required pacakges
 
-* uv run main.py
-* fastmcp run main.py --transport http --host 0.0.0.0 --port 8000
+uv pip install -r requirements.txt
 
-To run inspector
+create a neon account
 
-* uv run fastmcp dev inspector main.py
-* select the "streamble http" as transport type
-* use "http://127.0.0.1:8000/mcp" as url
-* click on connect
+create a project with the postgresql database and copy the db connection url and paste it in env
+
+create prisma folder and inside folder create a schema.prisma file
+
+write all the table schemas needed
+
+uv run prisma generate -> generate prisma client
+
+uv run prisma db push -> push schema to neon
+
+
+Terminal 1: run npx @modelcontextprotocol/inspector -> you can able to see the tools in the inspector
+
+Terminal 2: uv run uvicorn app.main:app --reload -> you can able to see the routes in the docs

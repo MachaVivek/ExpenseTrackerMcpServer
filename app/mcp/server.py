@@ -1,3 +1,8 @@
+# below three lines are deploy fix
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 from fastmcp import FastMCP
 
 # Create MCP server instance

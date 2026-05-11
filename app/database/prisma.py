@@ -1,3 +1,3 @@
-from app.generated.client import Prisma
+from prisma import Prisma
 # create a SINGLE shared Prisma client instance for the entire application.
 db = Prisma()

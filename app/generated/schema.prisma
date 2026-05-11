@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-py"
+  output   = "../app/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum BudgetPeriod {
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  username String @unique
+  email    String @unique
+  password String
+
+  fullName     String?
+  profileImage String?
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions Transaction[]
+  budgets      Budget[]
+
+  @@index([email])
+  @@index([username])
+}
+
+model Transaction {
+  id Int @id @default(autoincrement())
+
+  title       String
+  description String?
+
+  amount Float
+
+  type     TransactionType
+  category String
+
+  transactionDate DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([transactionDate])
+  @@index([type])
+  @@index([category])
+}
+
+model Budget {
+  id Int @id @default(autoincrement())
+
+  name        String
+  amount      Float
+  spentAmount Float  @default(0)
+
+  period BudgetPeriod
+
+  category String
+
+  startDate DateTime
+  endDate   DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([category])
+}

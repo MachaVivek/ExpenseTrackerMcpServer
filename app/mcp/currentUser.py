@@ -8,7 +8,8 @@ async def get_current_mcp_user(
     ctx: Context
 ):
     # Read Authorization header
-    auth_header = ctx.request_context.meta.Authorization
+    request = ctx.request_context.request
+    auth_header = request.headers.get("Authorization")
 
     # Check token existence
     if not auth_header:
